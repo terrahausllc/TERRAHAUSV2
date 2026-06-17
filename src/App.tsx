@@ -21,6 +21,8 @@ import React, { useState, ReactNode, createContext, useContext } from 'react';
 type Language = 'en' | 'es';
 type UserType = 'homeowner' | 'contractor';
 
+const COMPANY_LOGO_URL = "https://github.com/terrahausllc/TERRA-HAUS-LLC/raw/7f7f42a2405b716000ae6705d4d72a3f30bf757f/images/logo.png";
+
 const translations = {
   en: {
     nav: { 
@@ -149,6 +151,17 @@ const translations = {
       sub: "Don't leave your outdoor investment to chance. Invest in a plan that ensures success.",
       bookConsult: "Book On-Site Consultation",
       inquirePartner: "Inquire Partnership"
+    },
+    welcome: {
+      title: "How can we help you today?",
+      homeowner: {
+        title: "Homeowner",
+        description: "I'm looking to transform my personal outdoor space."
+      },
+      contractor: {
+        title: "Contractor",
+        description: "I'm a professional looking for design and 3D support."
+      }
     },
     footer: {
       description: "Based in Southeast Michigan. Serving discerning homeowners across Michigan and Northern Ohio with buildable, real-world design solutions.",
@@ -318,6 +331,17 @@ const translations = {
       bookConsult: "Reservar Consulta en el Sitio",
       inquirePartner: "Inquirir Asociación"
     },
+    welcome: {
+      title: "¿Cómo podemos ayudarle hoy?",
+      homeowner: {
+        title: "Propietario",
+        description: "Busco transformar mi espacio exterior personal."
+      },
+      contractor: {
+        title: "Contratista",
+        description: "Soy un profesional que busca soporte de diseño y 3D."
+      }
+    },
     footer: {
       description: "Con sede en el sureste de Michigan. Atendiendo a propietarios exigentes en Michigan y el norte de Ohio con soluciones de diseño construibles y del mundo real.",
       explore: "Explorar",
@@ -333,7 +357,7 @@ const translations = {
       portfolioPdf: "https://drive.google.com/file/d/1R93mSIMg4X7wTGkR7lrL-ysT7srtD9pD/view?usp=sharing",
       intake: {
         homeowner: "https://docs.google.com/forms/d/e/1FAIpQLSctCe7Hl6Y1r5J5yb9uHeUuA0hDW0dOEx3wdng0zJ9AVup7MA/viewform?usp=header",
-        contractor: "https://docs.google.com/forms/d/e/1FAIpQLSdZNzWJ1reUR2PJwjdUusg6tdbsX6hvL4QMRYer-bijskMTQg/viewform?usp=header"
+        contractor: "https://docs.google.com/forms/d/e/1FAIpQLSdVYVRYmquof9gqcPkMUvamu9BmoV-rELLhWddT1f0F8t_sCw/viewform?usp=share_link&ouid=112192621222910751562"
       }
     },
     cta: { schedule: "Programar Llamada", explore: "Explorar Paquetes" },
@@ -379,9 +403,6 @@ const Navbar = () => {
   const { lang, setLang, userType, setUserType } = useContext(LanguageContext);
   const t = translations[lang].nav;
 
-  // --- ADD YOUR LOGO URL HERE ---
-  const companyLogoUrl = "https://drive.google.com/uc?id=1PtOxXMZ5qpSV4uPoA0tnsrTE8MwV8Arf"; // Direct link from user provided Google Drive ID
-
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-subtle">
       <div className="bg-charcoal text-white/60 py-2 px-6">
@@ -394,58 +415,47 @@ const Navbar = () => {
             </a>
           </div>
           <div className="flex items-center gap-6">
-            <div className="flex gap-4 border-r border-white/10 pr-6 mr-1">
+            <div className="flex p-1 bg-white/5 rounded-full">
               <button 
                 onClick={() => setUserType('homeowner')}
-                className={`transition-colors ${userType === 'homeowner' ? 'text-white' : 'hover:text-white'}`}
+                className={`px-3 py-1 rounded-full transition-all text-[9px] uppercase tracking-tighter ${userType === 'homeowner' ? 'bg-sage text-white' : 'text-white/40 hover:text-white/70'}`}
               >
                 {t.homeowner}
               </button>
               <button 
                 onClick={() => setUserType('contractor')}
-                className={`transition-colors ${userType === 'contractor' ? 'text-white' : 'hover:text-white'}`}
+                className={`px-3 py-1 rounded-full transition-all text-[9px] uppercase tracking-tighter ${userType === 'contractor' ? 'bg-sage text-white' : 'text-white/40 hover:text-white/70'}`}
               >
                 {t.contractor}
               </button>
             </div>
             <button 
               onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
-              className="flex items-center gap-1 hover:text-white transition-colors"
+              className="flex items-center gap-1 hover:text-white transition-colors border-l border-white/10 pl-6"
             >
-              <Globe className="w-3 h-3 text-sage" /> {lang === 'en' ? 'Español' : 'English'}
+              <Globe className="w-3 h-3 text-sage" /> {lang === 'en' ? 'ESP' : 'ENG'}
             </button>
           </div>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <a href="#" className="flex items-center gap-4 group">
-          {companyLogoUrl ? (
+          {COMPANY_LOGO_URL ? (
             <img 
-              src={companyLogoUrl} 
+              src={COMPANY_LOGO_URL} 
               alt="Terra Haus Logo" 
               className="h-14 w-auto object-contain"
-              referrerPolicy="no-referrer"
               onError={(e) => {
-                const target = e.currentTarget;
-                target.style.display = 'none';
-                const parent = target.parentElement;
-                if (parent) {
-                  const div = document.createElement('div');
-                  div.className = "flex flex-col";
-                  div.innerHTML = `
-                    <span class="font-serif text-2xl font-semibold tracking-tight text-charcoal uppercase leading-none group-hover:text-sage transition-colors">Terra Haus</span>
-                    <span class="text-[9px] tracking-[0.2em] uppercase opacity-60 mt-1">${t.tagline}</span>
-                  `;
-                  parent.appendChild(div);
-                }
+                e.currentTarget.style.display = 'none';
+                const fallback = e.currentTarget.nextElementSibling;
+                if (fallback) fallback.classList.remove('hidden');
               }}
             />
-          ) : (
-            <div className="flex flex-col">
-              <span className="font-serif text-2xl font-semibold tracking-tight text-charcoal uppercase leading-none group-hover:text-sage transition-colors">Terra Haus</span>
-              <span className="text-[9px] tracking-[0.2em] uppercase opacity-60 mt-1">{t.tagline}</span>
-            </div>
-          )}
+          ) : null}
+          <div className={`${COMPANY_LOGO_URL ? 'hidden' : ''} flex flex-col`}>
+            <span className="font-serif text-2xl font-semibold tracking-tight text-charcoal uppercase leading-none group-hover:text-sage transition-colors">Terra Haus</span>
+            <span className="text-[9px] tracking-[0.2em] uppercase opacity-60 mt-1">{t.tagline}</span>
+          </div>
         </a>
 
         {/* Desktop Nav */}
@@ -483,9 +493,19 @@ const Navbar = () => {
           <a href="#portfolio" onClick={() => setIsOpen(false)} className="text-lg font-medium text-charcoal">{t.portfolio}</a>
           <a href="#packages" onClick={() => setIsOpen(false)} className="text-lg font-medium text-charcoal">{t.packages}</a>
           <a href="#service-area" onClick={() => setIsOpen(false)} className="text-lg font-medium text-charcoal">{t.regions}</a>
-          <div className="flex gap-4 pt-4 border-t border-gray-100">
-            <button onClick={() => {setUserType('homeowner'); setIsOpen(false);}} className={`text-xs font-bold uppercase tracking-widest ${userType === 'homeowner' ? 'text-sage' : 'text-gray-400'}`}>{t.homeowner}</button>
-            <button onClick={() => {setUserType('contractor'); setIsOpen(false);}} className={`text-xs font-bold uppercase tracking-widest ${userType === 'contractor' ? 'text-sage' : 'text-gray-400'}`}>{t.contractor}</button>
+          <div className="flex bg-gray-50 p-1 rounded-full border border-subtle">
+            <button 
+              onClick={() => {setUserType('homeowner'); setIsOpen(false);}} 
+              className={`flex-1 py-3 text-[10px] font-bold uppercase tracking-widest rounded-full transition-all ${userType === 'homeowner' ? 'bg-sage text-white shadow-md' : 'text-gray-400'}`}
+            >
+              {t.homeowner}
+            </button>
+            <button 
+              onClick={() => {setUserType('contractor'); setIsOpen(false);}} 
+              className={`flex-1 py-3 text-[10px] font-bold uppercase tracking-widest rounded-full transition-all ${userType === 'contractor' ? 'bg-sage text-white shadow-md' : 'text-gray-400'}`}
+            >
+              {t.contractor}
+            </button>
           </div>
           <a 
             href={translations[lang].links.discovery}
@@ -515,16 +535,31 @@ const Hero = () => {
   const t = translations[lang];
 
   return (
-    <section className="relative h-[90vh] min-h-[700px] flex items-center overflow-hidden pt-24">
-      {/* Background Image with Parallax-ish effect */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1621841314392-563630f9a202?q=80&w=2000&auto=format&fit=crop" 
-          alt="3D Landscape Render Michigan" 
-          className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-black/40 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
+    <section className="relative h-[90vh] min-h-[700px] flex items-center overflow-hidden pt-24 bg-charcoal">
+      {/* Background with modern abstract, geometric/topographical gradients using logo colors */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Subtle grids or topographic vibe */}
+        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        {/* Large ambient glowing spheres / gradients */}
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[80%] rounded-full bg-sage/20 blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[70%] rounded-full bg-earth-brown/15 blur-[120px]"></div>
+        <div className="absolute top-[30%] left-[30%] w-[40%] h-[60%] rounded-full bg-deep-green/10 blur-[130px]"></div>
+
+        {/* Dynamic abstract vector landscape silhouette or elegant contours */}
+        <svg className="absolute bottom-0 left-0 w-full h-[60%] text-charcoal/45 opacity-60" viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path fill="currentColor" opacity="0.4" d="M0,224L120,202.7C240,181,480,139,720,138.7C960,139,1200,181,1320,202.7L1440,224L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+          <path fill="currentColor" opacity="0.6" d="M0,160L120,181.3C240,203,480,245,720,234.7C960,224,1200,160,1320,128L1440,96L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+        </svg>
+
+        {/* Premium subtle lines of architecture */}
+        <svg className="absolute top-0 right-0 w-[40%] h-full opacity-[0.08] text-white" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line x1="0" y1="20" x2="100" y2="80" stroke="currentColor" strokeWidth="0.5" />
+          <line x1="20" y1="0" x2="80" y2="100" stroke="currentColor" strokeWidth="0.5" />
+          <line x1="50" y1="0" x2="50" y2="100" stroke="currentColor" strokeWidth="0.5" strokeDasharray="3 3" />
+        </svg>
+
+        <div className="absolute inset-0 bg-charcoal/40 bg-gradient-to-r from-charcoal/95 via-charcoal/50 to-transparent"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
@@ -655,31 +690,21 @@ const Portfolio = () => {
   const { lang } = useContext(LanguageContext);
   const t = translations[lang].portfolio;
 
-  // --- ADD YOUR PORTFOLIO IMAGES HERE ---
-  const portfolioImages = [
-    { url: "https://images.unsplash.com/photo-1598902108854-10e335adac99?q=80&w=1200&auto=format&fit=crop", title: "Garden Oasis" },
-    { url: "https://images.unsplash.com/photo-1590059132223-b68494f18374?q=80&w=1200&auto=format&fit=crop", title: "Curb Appeal" },
-    { url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop", title: "Luxury Poolscape" },
-    { url: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=1200&auto=format&fit=crop", title: "Outdoor Living" },
-    { url: "https://images.unsplash.com/photo-1621841314392-563630f9a202?q=80&w=1200&auto=format&fit=crop", title: "Estate Plan Render" },
-    { url: "https://images.unsplash.com/photo-1558603668-6570496b66f8?q=80&w=1200&auto=format&fit=crop", title: "Limestone Sanctuary" }
-  ];
-
   return (
     <section id="portfolio" className="py-24 bg-soft-white px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-12">
           <div className="max-w-2xl">
             <span className="text-sage font-sans text-[10px] font-bold uppercase tracking-[0.3em] block mb-4 italic">{t.eyebrow}</span>
             <h2 className="text-4xl md:text-5xl font-serif text-charcoal tracking-tight leading-tight">{t.title}</h2>
             <p className="text-gray-500 font-light mt-6 max-w-xl">{t.description}</p>
           </div>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 md:shrink-0 w-full md:w-auto">
             <a 
               href={translations[lang].links.portfolioPdf}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sage font-sans text-xs font-bold uppercase tracking-widest border-b-2 border-sage pb-1 hover:opacity-70 transition-opacity"
+              className="inline-flex items-center justify-center px-8 py-4 bg-sage text-white font-sans text-xs font-bold uppercase tracking-widest hover:bg-sage/95 active:scale-95 transition-all text-center rounded-sm shadow-sm"
             >
               {t.samplePdf} (PDF)
             </a>
@@ -687,36 +712,11 @@ const Portfolio = () => {
               href={translations[lang].links.discovery}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-charcoal font-sans text-xs font-bold uppercase tracking-widest border-b-2 border-charcoal/20 pb-1 hover:opacity-70 transition-opacity"
+              className="inline-flex items-center justify-center px-8 py-4 bg-charcoal text-white font-sans text-xs font-bold uppercase tracking-widest hover:bg-charcoal/95 active:scale-95 transition-all text-center rounded-sm shadow-sm"
             >
               Request Custom Renderings
             </a>
           </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {portfolioImages.map((img, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group relative aspect-[4/5] overflow-hidden bg-warm-gray rounded-sm cursor-crosshair"
-            >
-              <img 
-                src={img.url} 
-                alt={img.title} 
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-in-out"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500"></div>
-              <div className="absolute bottom-6 left-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-white/50 block mb-1">Terra Haus Design</span>
-                <h4 className="text-white font-serif text-xl">{img.title}</h4>
-              </div>
-            </motion.div>
-          ))}
         </div>
       </div>
     </section>
@@ -922,15 +922,55 @@ const ComparisonSection = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="aspect-[4/5] bg-warm-gray rounded-[80px_4px_80px_4px] overflow-hidden border-[12px] border-white/5 relative shadow-2xl"
+              className="aspect-[4/5] bg-charcoal rounded-[80px_4px_80px_4px] overflow-hidden border-[12px] border-white/5 relative shadow-2xl flex flex-col justify-between p-8"
             >
-              <img 
-                src="https://drive.google.com/uc?id=1XvCbCqVVww2pZXVGV5jLrD7wCnYIdzmA" 
-                alt="Terra Haus Design Render" 
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 ease-in-out scale-110 group-hover:scale-100"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-sage/20 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-1000"></div>
+              {/* Background abstract layout showing landscape architect blueprint */}
+              <div className="absolute inset-0 z-0 opacity-40">
+                {/* Micro gird representing blueprint grid */}
+                <div className="absolute inset-0 opacity-[0.08] bg-[radial-gradient(#ffffff_1.5px,transparent_1.5px)] [background-size:24px_24px]"></div>
+                
+                {/* Overlapping organic contour curves of a garden pool/patio design */}
+                <svg className="absolute inset-0 w-full h-full text-sage" viewBox="0 0 400 500" fill="none">
+                  {/* Concentric-like contour or elevation lines */}
+                  <path d="M-50,150 C100,100 200,250 450,200" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" strokeDasharray="4 4" />
+                  <path d="M-50,200 C120,150 220,300 450,250" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" />
+                  <path d="M-50,250 C140,200 240,350 450,300" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.6" />
+                  
+                  {/* Mock brick/paver patio pattern area */}
+                  <rect x="180" y="280" width="180" height="150" rx="4" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" strokeDasharray="3 3" />
+                  
+                  {/* Mock Pool area */}
+                  <path d="M220,300 C280,310 320,350 300,410 C280,450 200,430 180,400 C160,370 180,320 220,300 Z" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="2" strokeOpacity="0.8" />
+                  
+                  {/* Tree / Planting circle design markers */}
+                  <circle cx="80" cy="180" r="25" stroke="currentColor" strokeWidth="1" strokeOpacity="0.5" strokeDasharray="2 2" />
+                  <circle cx="80" cy="180" r="15" stroke="currentColor" strokeWidth="1" strokeOpacity="0.3" />
+                  <line x1="80" y1="150" x2="80" y2="210" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.3" />
+                  <line x1="50" y1="180" x2="110" y2="180" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.3" />
+
+                  <circle cx="120" cy="110" r="15" stroke="currentColor" strokeWidth="1" strokeOpacity="0.4" strokeDasharray="2 2" />
+                  
+                  {/* North compass mark */}
+                  <g transform="translate(320, 60)">
+                    <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.3" />
+                    <line x1="20" y1="5" x2="20" y2="35" stroke="currentColor" strokeWidth="1" strokeOpacity="0.6" />
+                    <line x1="5" y1="20" x2="35" y2="20" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.3" />
+                    <polygon points="20,5 17,15 23,15" fill="currentColor" fillOpacity="0.7" />
+                    <text x="18" y="47" className="font-sans text-[8px] fill-white opacity-40">N</text>
+                  </g>
+                </svg>
+
+                {/* Accent ambient blob in deep gold/earth-brown and sage */}
+                <div className="absolute top-1/3 left-1/4 w-[150px] h-[150px] rounded-full bg-earth-brown/25 blur-[60px]"></div>
+                <div className="absolute bottom-1/4 right-1/4 w-[180px] h-[180px] rounded-full bg-sage/30 blur-[70px]"></div>
+              </div>
+
+              {/* Graphic Overlay Details */}
+              <div className="relative z-10 flex flex-col justify-between h-full pointer-events-none select-none">
+                <div className="flex justify-end items-start w-full">
+                  <span className="font-mono text-sage text-[10px] bg-sage/10 border border-sage/20 px-2 py-0.5 rounded">3D ACTIVE</span>
+                </div>
+              </div>
             </motion.div>
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
@@ -1079,8 +1119,22 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20">
           <div className="max-w-sm">
             <div className="flex flex-col mb-6">
-              <span className="font-serif text-2xl font-semibold tracking-tight text-charcoal uppercase leading-none">Terra Haus</span>
-              <span className="text-[9px] tracking-[0.2em] uppercase opacity-40 mt-1 italic">{translations[lang].nav.tagline}</span>
+              {COMPANY_LOGO_URL ? (
+                <img 
+                  src={COMPANY_LOGO_URL} 
+                  alt="Terra Haus Logo" 
+                  className="h-12 w-auto object-contain mb-4"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    const fallback = e.currentTarget.nextElementSibling;
+                    if (fallback) fallback.classList.remove('hidden');
+                  }}
+                />
+              ) : null}
+              <div className={`${COMPANY_LOGO_URL ? 'hidden' : ''} flex flex-col`}>
+                <span className="font-serif text-2xl font-semibold tracking-tight text-charcoal uppercase leading-none">Terra Haus</span>
+                <span className="text-[9px] tracking-[0.2em] uppercase opacity-40 mt-1 italic">{translations[lang].nav.tagline}</span>
+              </div>
             </div>
             <p className="text-gray-400 font-light text-xs leading-relaxed">
               {t.description}
@@ -1123,9 +1177,90 @@ const Footer = () => {
   );
 };
 
+// --- Modal Component ---
+
+const WelcomeModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  const { lang, setUserType } = useContext(LanguageContext);
+  const t = translations[lang].welcome;
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-charcoal/80 backdrop-blur-md">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        className="bg-white w-full max-w-2xl overflow-hidden shadow-2xl border border-white/20"
+      >
+        <div className="p-10 md:p-16 text-center text-charcoal">
+          {COMPANY_LOGO_URL && (
+            <div className="flex justify-center mb-8">
+              <img 
+                src={COMPANY_LOGO_URL} 
+                alt="Terra Haus Logo" 
+                className="h-20 w-auto object-contain"
+              />
+            </div>
+          )}
+          <SectionHeading eyebrow="Terra Haus">{t.title}</SectionHeading>
+          
+          <div className="grid md:grid-cols-2 gap-8 mt-12">
+            <button 
+              onClick={() => {
+                setUserType('homeowner');
+                onClose();
+              }}
+              className="group p-8 border border-subtle hover:border-sage bg-soft-white transition-all text-left flex flex-col items-start gap-4 hover:shadow-xl"
+            >
+              <div className="w-12 h-12 bg-sage/10 text-sage rounded-full flex items-center justify-center group-hover:bg-sage group-hover:text-white transition-colors">
+                <Home className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-serif text-2xl text-charcoal mb-2 group-hover:text-sage transition-colors">{t.homeowner.title}</h3>
+                <p className="text-gray-500 text-sm font-light leading-relaxed">{t.homeowner.description}</p>
+              </div>
+            </button>
+
+            <button 
+              onClick={() => {
+                setUserType('contractor');
+                onClose();
+              }}
+              className="group p-8 border border-subtle hover:border-sage bg-soft-white transition-all text-left flex flex-col items-start gap-4 hover:shadow-xl"
+            >
+              <div className="w-12 h-12 bg-sage/10 text-sage rounded-full flex items-center justify-center group-hover:bg-sage group-hover:text-white transition-colors">
+                <Compass className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-serif text-2xl text-charcoal mb-2 group-hover:text-sage transition-colors">{t.contractor.title}</h3>
+                <p className="text-gray-500 text-sm font-light leading-relaxed">{t.contractor.description}</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
 export default function App() {
   const [lang, setLang] = useState<Language>('en');
   const [userType, setUserType] = useState<UserType>('homeowner');
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  React.useEffect(() => {
+    // Check if user has already made a selection in this session
+    const hasSelected = sessionStorage.getItem('terrahaus_user_type_selected');
+    if (hasSelected) {
+      setIsModalOpen(false);
+      setUserType(hasSelected as UserType);
+    }
+  }, []);
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    sessionStorage.setItem('terrahaus_user_type_selected', userType);
+  };
 
   React.useEffect(() => {
     const seo = translations[lang].seo[userType];
@@ -1138,11 +1273,17 @@ export default function App() {
       document.head.appendChild(metaDescription);
     }
     metaDescription.setAttribute('content', seo.description);
-  }, [lang, userType]);
+
+    // If modal is closed and we have a type, update sessionStorage to persist selection for this session
+    if (!isModalOpen) {
+      sessionStorage.setItem('terrahaus_user_type_selected', userType);
+    }
+  }, [lang, userType, isModalOpen]);
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, userType, setUserType }}>
       <div className="min-h-screen">
+        <WelcomeModal isOpen={isModalOpen} onClose={handleModalClose} />
         <Navbar />
         <main>
           <Hero />
