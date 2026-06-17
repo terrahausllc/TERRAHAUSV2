@@ -12,7 +12,9 @@ import {
   Menu,
   Phone,
   Globe,
-  Mail
+  Mail,
+  Facebook,
+  Youtube
 } from 'lucide-react';
 import React, { useState, ReactNode, createContext, useContext } from 'react';
 
@@ -131,10 +133,14 @@ const translations = {
     },
     serviceArea: {
       title: "We Consult On-Site.",
-      description: "We bridge the gap between imagination and execution by being present on your property.",
+      description: "The process begins with a paid on-site Property Evaluation and Project Consultation. During this 1–2 hour visit, we evaluate the property, align on goals, and establish a realistic project direction. This step sets the foundation for design, and includes a Scope • Scale • Budget Report with clear next steps.",
       regions: {
         mi: "Southeast Michigan",
         oh: "Northern Ohio"
+      },
+      locations: {
+        mi: "Northville • Plymouth / Canton • Ann Arbor / Saline • Birmingham • Bloomfield Hills • West Bloomfield • Novi • Grosse Ile • Monroe County • Temperance • Lambertville • Dundee • Flat Rock • Trenton • Riverview • Brownstown Township",
+        oh: "Perrysburg • Sylvania • Ottawa Hills • Maumee"
       }
     },
     testimonials: {
@@ -177,6 +183,9 @@ const translations = {
     links: {
       discovery: "https://calendar.app.google/BsZzuVbojnGZNm6Q8",
       portfolioPdf: "https://drive.google.com/file/d/1R93mSIMg4X7wTGkR7lrL-ysT7srtD9pD/view?usp=sharing",
+      instagram: "https://www.instagram.com/terrahaus.design/",
+      facebook: "https://www.facebook.com/people/TERRA-HAUS/61567423467110/?mibextid=wwXIfr&rdid=lS6BDWaFxDEf6pgl&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F188GAQExYQ%2F%3Fmibextid%3DwwXIfr",
+      youtube: "https://www.youtube.com/@TERRAHAUSDESIGN",
       intake: {
         homeowner: "https://docs.google.com/forms/d/e/1FAIpQLSctCe7Hl6Y1r5J5yb9uHeUuA0hDW0dOEx3wdng0zJ9AVup7MA/viewform?usp=header",
         contractor: "https://docs.google.com/forms/d/e/1FAIpQLSdZNzWJ1reUR2PJwjdUusg6tdbsX6hvL4QMRYer-bijskMTQg/viewform?usp=header"
@@ -310,10 +319,14 @@ const translations = {
     },
     serviceArea: {
       title: "Consultamos en el Sitio.",
-      description: "Cerramos la brecha entre la imaginación y la ejecución estando presentes en su propiedad.",
+      description: "El proceso comienza con una Evaluación de la Propiedad y Consulta del Proyecto pagada en el sitio. Durante esta visita de 1 a 2 horas, evaluamos la propiedad, alineamos los objetivos y establecemos una dirección realista para el proyecto. Este paso sienta las bases para el diseño e incluye un Informe de Alcance • Escala • Presupuesto con los siguientes pasos claros.",
       regions: {
         mi: "Sureste de Michigan",
         oh: "Norte de Ohio"
+      },
+      locations: {
+        mi: "Northville • Plymouth / Canton • Ann Arbor / Saline • Birmingham • Bloomfield Hills • West Bloomfield • Novi • Grosse Ile • Monroe County • Temperance • Lambertville • Dundee • Flat Rock • Trenton • Riverview • Brownstown Township",
+        oh: "Perrysburg • Sylvania • Ottawa Hills • Maumee"
       }
     },
     testimonials: {
@@ -355,6 +368,9 @@ const translations = {
     links: {
       discovery: "https://calendar.app.google/BsZzuVbojnGZNm6Q8",
       portfolioPdf: "https://drive.google.com/file/d/1R93mSIMg4X7wTGkR7lrL-ysT7srtD9pD/view?usp=sharing",
+      instagram: "https://www.instagram.com/terrahaus.design/",
+      facebook: "https://www.facebook.com/people/TERRA-HAUS/61567423467110/?mibextid=wwXIfr&rdid=lS6BDWaFxDEf6pgl&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F188GAQExYQ%2F%3Fmibextid%3DwwXIfr",
+      youtube: "https://www.youtube.com/@TERRAHAUSDESIGN",
       intake: {
         homeowner: "https://docs.google.com/forms/d/e/1FAIpQLSctCe7Hl6Y1r5J5yb9uHeUuA0hDW0dOEx3wdng0zJ9AVup7MA/viewform?usp=header",
         contractor: "https://docs.google.com/forms/d/e/1FAIpQLSdVYVRYmquof9gqcPkMUvamu9BmoV-rELLhWddT1f0F8t_sCw/viewform?usp=share_link&ouid=112192621222910751562"
@@ -999,24 +1015,24 @@ const ServiceArea = () => {
     <section id="service-area" className="py-24 bg-warm-gray px-6 border-y border-subtle">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-16 items-start">
-          <div className="md:w-1/3">
-            <h2 className="text-4xl font-serif mb-6 text-charcoal">{t.title}</h2>
-            <p className="text-gray-500 text-sm font-light leading-relaxed mb-10 italic">
+          <div className="md:w-2/5">
+            <h2 className="text-4xl font-serif mb-6 text-charcoal leading-tight">{t.title}</h2>
+            <p className="text-gray-500 text-sm font-light leading-relaxed mb-10">
               "{t.description}"
             </p>
           </div>
 
-          <div className="md:w-2/3 grid sm:grid-cols-2 gap-12 w-full">
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] font-bold opacity-40 mb-6 border-b border-black/5 pb-2">{t.regions.mi}</p>
-              <p className="text-sm font-medium text-charcoal leading-loose">
-                Plymouth • Northville • Ann Arbor • Grosse Ile • Birmingham • Bloomfield • Novi • Monroe
+          <div className="md:w-3/5 grid sm:grid-cols-1 md:grid-cols-2 gap-8 w-full">
+            <div className="bg-white p-8 rounded-sm shadow-sm border border-black/5">
+              <p className="text-[10px] uppercase tracking-[0.2em] font-bold opacity-45 mb-4 border-b border-black/5 pb-2">{t.regions.mi}</p>
+              <p className="text-xs font-semibold text-charcoal leading-loose tracking-wide">
+                {t.locations.mi}
               </p>
             </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] font-bold opacity-40 mb-6 border-b border-black/5 pb-2">{t.regions.oh}</p>
-              <p className="text-sm font-medium text-charcoal leading-loose">
-                Perrysburg • Sylvania • Toledo
+            <div className="bg-white p-8 rounded-sm shadow-sm border border-black/5">
+              <p className="text-[10px] uppercase tracking-[0.2em] font-bold opacity-45 mb-4 border-b border-black/5 pb-2">{t.regions.oh}</p>
+              <p className="text-xs font-semibold text-charcoal leading-loose tracking-wide">
+                {t.locations.oh}
               </p>
             </div>
           </div>
@@ -1147,9 +1163,31 @@ const Footer = () => {
                 <Mail className="w-3 h-3" /> <a href={`mailto:${translations[lang].email}`} className="hover:text-sage transition-colors">{translations[lang].email}</a>
               </div>
             </div>
+            
+            {/* Social Media Links */}
+            <div className="mt-6 flex items-center gap-3">
+              <a 
+                href={translations[lang].links.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full border border-subtle flex items-center justify-center text-charcoal/50 hover:border-sage hover:text-sage hover:bg-sage/5 transition-all"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+              <a 
+                href={translations[lang].links.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full border border-subtle flex items-center justify-center text-charcoal/50 hover:border-sage hover:text-sage hover:bg-sage/5 transition-all"
+                aria-label="YouTube"
+              >
+                <Youtube className="w-4 h-4" />
+              </a>
+            </div>
           </div>
           
-          <div className="flex gap-20">
+          <div className="flex flex-wrap gap-12 sm:gap-16">
             <div>
               <h5 className="font-bold text-[10px] uppercase tracking-[0.2em] text-charcoal/40 mb-6">{t.explore}</h5>
               <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-charcoal/60">
@@ -1164,6 +1202,12 @@ const Footer = () => {
                 <li><a href={translations[lang].links.discovery} target="_blank" rel="noopener noreferrer" className="hover:text-sage transition-colors">{translations[lang].cta.schedule}</a></li>
                 <li><a href={translations[lang].links.intake.homeowner} target="_blank" rel="noopener noreferrer" className="hover:text-sage transition-colors">{translations[lang].packages.intakeForm}</a></li>
               </ul>
+            </div>
+            <div className="max-w-[240px]">
+              <h5 className="font-bold text-[10px] uppercase tracking-[0.2em] text-charcoal/40 mb-6">{translations[lang].nav.regions}</h5>
+              <p className="text-[11px] text-gray-400 font-light leading-relaxed">
+                Southeast Michigan & Northern Ohio including Plymouth, Northville, Ann Arbor, Novi, Birmingham, Bloomfield Hills, and Perrysburg.
+              </p>
             </div>
           </div>
         </div>
